@@ -238,10 +238,6 @@ const TerminalPortfolio = () => {
         'Downloads': {
           type: 'directory',
           content: {
-            'cool_script.sh': {
-              type: 'file',
-              content: () => `#!/bin/bash\necho "Running cool script..."\nsleep 1\necho "Script finished being cool."`
-            },
             'top_secret.txt': { // Renamed for clarity
                type: 'file',
                content: `Grandma's Gingersnaps
