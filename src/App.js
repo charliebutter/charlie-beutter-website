@@ -121,6 +121,15 @@ const TerminalPortfolio = () => {
       color: colors.pink,
       tags: ["python", "flask"]
     },
+    {
+      id: 3,
+      title: "TRACEBACK",
+      fileName: "traceback", // Filename representation
+      description: "Coming soon...",
+      link: "",
+      color: colors.yellow,
+      tags: ["?"]
+    },
   ];
 
   // --- Reusable Project Item Component ---
@@ -155,6 +164,7 @@ const TerminalPortfolio = () => {
                         tag === 'react' ? colors.blue :
                         tag === 'python' ? colors.green :
                         tag === 'flask' ? colors.peach :
+                        tag === '?' ? colors.mauve :
                         colors.text,
                   lineHeight: '1.3',
                   display: 'inline-block',
