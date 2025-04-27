@@ -835,7 +835,7 @@ Instructions:
           flexShrink: 0,
         }}
       >
-        <div>Charlie's Desktop</div>
+        <div style={{color: colors.peach}}>Charlie's Desktop</div>
         <div style={{display: 'flex', gap: '8px'}}>
           <span style={{width: '12px', height: '12px', borderRadius: '50%', backgroundColor: colors.yellow, display: 'inline-block'}}></span>
           <span style={{width: '12px', height: '12px', borderRadius: '50%', backgroundColor: colors.green, display: 'inline-block'}}></span>
