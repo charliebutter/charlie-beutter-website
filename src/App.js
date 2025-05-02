@@ -30,7 +30,6 @@ const levenshtein = (a, b) => {
 
   return matrix[b.length][a.length];
 };
-// --- End Helper Function ---
 
 const TerminalPortfolio = () => {
   const [typedText, setTypedText] = useState('');
@@ -49,7 +48,7 @@ const TerminalPortfolio = () => {
       setLastLoginTime(new Date().toLocaleString());
   }, []);
 
-  // Define initial welcome text - Fixed: Use initial path only
+  // Define initial welcome text
   const initialWelcomeTextRef = useRef('');
   useEffect(() => {
     if (lastLoginTime && initialWelcomeTextRef.current === '') {
@@ -71,7 +70,7 @@ const TerminalPortfolio = () => {
     }
   }, [lastLoginTime]); // Only depends on lastLoginTime to trigger setup
 
-  // Type welcome text animation effect - Fixed: Uses the static initial text
+  // Type welcome text animation effect
   useEffect(() => {
       const textToType = initialWelcomeTextRef.current;
       if (textToType && typedText.length < textToType.length) {
@@ -81,7 +80,6 @@ const TerminalPortfolio = () => {
           return () => clearTimeout(timeout);
       }
   }, [typedText]); // Depends only on typedText to continue typing
-
 
   // Colors from catppuccin mocha palette
   const colors = {
@@ -106,7 +104,7 @@ const TerminalPortfolio = () => {
     {
       id: 1,
       title: "Flavor Mixing",
-      fileName: "flavor-mixing", // Filename representation
+      fileName: "flavor-mixing",
       description: "An interactive crowdsourced experiment where users vote on hypothetical flavor combinations. The app collects data on which flavor pairings work best according to public opinion and visualizes the results in real-time.",
       link: "https://flavor-mixing.com",
       color: colors.green,
@@ -115,7 +113,7 @@ const TerminalPortfolio = () => {
     {
       id: 2,
       title: "Fantasy Names",
-      fileName: "fantasy-names", // Filename representation
+      fileName: "fantasy-names",
       description: "A fantasy name generator built with linguistic principles. Uses a block-based algorithm with compatibility scoring to create authentic-sounding names for different fantasy species such as elves, orcs, and druids.",
       link: "https://fantasy-names.charliebeutter.com",
       color: colors.pink,
@@ -124,7 +122,7 @@ const TerminalPortfolio = () => {
     {
       id: 3,
       title: "TRACEBACK",
-      fileName: "traceback", // Filename representation
+      fileName: "traceback",
       description: "Coming soon...",
       link: "",
       color: colors.yellow,
@@ -135,12 +133,11 @@ const TerminalPortfolio = () => {
   // --- Reusable Project Item Component ---
   const ProjectItem = ({ project, colors }) => (
     <div
-      className="project-item" // Keep class for potential global styles if needed later
+      className="project-item"
       style={{
         background: colors.surface0,
         padding: '12px',
         borderRadius: '4px',
-        // Remove marginBottom here, let the container manage spacing
         borderLeft: `4px solid ${project.color}`
       }}
     >
@@ -176,9 +173,7 @@ const TerminalPortfolio = () => {
       </div>
     </div>
   );
-  // --- End Reusable Project Item Component ---
 
-  // --- Define Content for Files ---
   const aboutContent = useCallback(() => (
     <div
       style={{
@@ -192,7 +187,7 @@ const TerminalPortfolio = () => {
       <p>You can check out my projects using the 'projects' command.</p>
       <p>Enjoy your stay!</p>
     </div>
-  ), [colors]); // Depend on colors
+  ), [colors]);
 
   const contactContent = useCallback(() => (
     <div
@@ -206,10 +201,10 @@ const TerminalPortfolio = () => {
       <p><span style={{color: colors.mauve}}>Email:</span> charlie.beutter@gmail.com</p>
       <p><span style={{color: colors.mauve}}>GitHub:</span> github.com/charliebutter</p>
     </div>
-  ), [colors]); // Depend on colors
+  ), [colors]);
 
 // --- Filesystem Structure ---
-  const filesystem = useRef({ // Use useRef to keep the structure stable across renders
+  const filesystem = useRef({
     '~': {
       type: 'directory',
       content: {
@@ -227,7 +222,7 @@ const TerminalPortfolio = () => {
  | |___| | | | (_| | |  | | |  __/ | |_) |  __/ |_| | |_| ||  __/ |   
   \\____|_| |_|\\__,_|_|  |_|_|\\___| |____/ \\___|\\__,_|\\__|\\__\\___|_|   
                                                                       
-` // Note the initial newline inside the backticks to prevent the first line sticking to the command prompt
+`
             },
             'projects': {
               type: 'directory',
@@ -238,7 +233,7 @@ const TerminalPortfolio = () => {
         'Downloads': {
           type: 'directory',
           content: {
-            'top_secret.txt': { // Renamed for clarity
+            'top_secret.txt': {
                type: 'file',
                content: `Grandma's Gingersnaps
 ---------------------
@@ -269,15 +264,10 @@ Instructions:
         }
       }
     }
-  }).current; // Access .current to get the object
-
-    
-
-    
+  }).current;
 
   // --- Filesystem Helper Functions ---
 
-      
   // Helper to resolve a path string
   const resolvePath = useCallback((targetPath) => {
     // Handle empty or null target path -> return current path
@@ -327,7 +317,7 @@ Instructions:
     // If only ['~'] remains, join returns '~'. If ['~', 'Desktop'], returns '~/Desktop'
     return resolvedParts.join('/');
 
-  }, [currentPath]); // Dependency: currentPath
+  }, [currentPath]);
 
   // Helper to get the node at a given absolute path
   const getNodeFromPath = useCallback((path) => {
@@ -353,7 +343,6 @@ Instructions:
     }
   }, [filesystem]);
 
-
   // Focus input field on load and when clicking on terminal
   useEffect(() => {
     if (inputRef.current) {
@@ -361,7 +350,7 @@ Instructions:
     }
   }, []);
 
-  // Scroll to bottom when command history updates OR input changes focus
+  // Scroll to bottom when command history updates or input changes focus
   useEffect(() => {
     if (contentRef.current) {
       contentRef.current.scrollTop = contentRef.current.scrollHeight;
@@ -374,7 +363,7 @@ Instructions:
     }
   };
 
-  // Available commands (Publicly listed)
+  // Available commands 
   const commands = {
     help: () => (
       <div className="command-output">
@@ -396,9 +385,7 @@ Instructions:
       const listOutput = handleLs(['-la', '~/Desktop/projects']);
       return (
           <div className="command-output">
-               {/* Show the simulated command */}
               <p style={{color: colors.mauve, marginBottom: '4px'}}>$ ls -la ~/Desktop/projects/</p>
-               {/* Render the actual list */}
               {listOutput}
           </div>
       );
@@ -519,9 +506,8 @@ Instructions:
     if (parentDir === '~/Desktop/projects') {
         const project = projects.find(p => p.fileName === filename);
         if (project) {
-            // Found a matching project file - USE THE REUSABLE COMPONENT
+            // Found a matching project file, use project component
             return (
-                // Optional: Wrap in a div if extra spacing/styling is needed for standalone 'cat'
                 <div style={{ marginTop: '4px' }}>
                     <ProjectItem project={project} colors={colors} />
                 </div>
@@ -551,12 +537,9 @@ Instructions:
 
     if (node.type === 'file') {
       const content = typeof node.content === 'function' ? node.content() : node.content;
-      // Ensure the content is rendered appropriately (might be a React component already)
-      // Add margin top for consistency with other cat outputs
       return <div style={{marginTop: '4px'}}>{typeof content === 'string' ? <p>{content}</p> : content}</div>;
     }
 
-    // Fallback error
     return <p style={{color: colors.red}}>cat: {targetFile}: Cannot display content</p>;
   };
 
@@ -582,10 +565,9 @@ Instructions:
     let output = null;
     const pathBeforeCommand = currentPath; // Capture path for history entry
 
-    // --- Check for Filesystem Commands FIRST ---
+    // --- Check for Filesystem Commands ---
     if (command === 'cd') {
       output = handleCd(args);
-      // Fixed: Always add cd to history, output will be null on success
       setCommandHistory(prev => [...prev, { command: commandInput, output, path: pathBeforeCommand }]);
     } else if (command === 'ls') {
       output = handleLs(args);
@@ -737,16 +719,13 @@ Instructions:
 
                     let newInput = '';
 
-                    // --- Corrected Reconstruction Logic ---
                     if (!endsWithSpace) {
-                        // Find where the last argument part *starts* in the original input string
-                        // This needs the original input, not just the argumentString
+                        // Find where the last argument part starts in the original input string
                         const indexOfLastPart = input.lastIndexOf(lastPart);
 
-                        // Calculate the base path *within* the last argument part
+                        // Calculate the base path within the last argument part
                         const basePathWithinLastPart = lastPart.substring(0, lastPart.length - prefixToMatch.length);
 
-                        // *** FIX: Handle the "cd ~" case ***
                         let newLastPart;
                         if (basePathWithinLastPart === '~' && !completedName.startsWith('/')) {
                             // If the base was just '~' and completion doesn't add a '/', add it ourselves
@@ -755,7 +734,6 @@ Instructions:
                             // Standard construction
                             newLastPart = basePathWithinLastPart + completedName;
                         }
-                        // *** END FIX ***
 
                         // Reconstruct the input string
                         newInput = input.substring(0, indexOfLastPart) + newLastPart;
@@ -764,7 +742,6 @@ Instructions:
                         // Append the completed name after the space
                         newInput = input + completedName;
                     }
-                    // --- End Corrected Reconstruction Logic ---
 
                     // Add a space after completing a file name for convenience
                     if (match.type === 'file' && !newInput.endsWith(' ')) {
@@ -773,9 +750,8 @@ Instructions:
 
                     setCurrentInput(newInput);
                     setHistoryIndex(-1); // Reset history index as input changed
-                    return; // Filesystem completion successful
+                    return;
                 }
-                // Optional: Could handle multiple matches here
             }
         }
 
@@ -805,7 +781,7 @@ Instructions:
   };
 
   return (
-    // Base container (styles unchanged)
+    // Base container
     <div
       style={{
         backgroundColor: colors.base,
@@ -823,7 +799,7 @@ Instructions:
       }}
       onClick={handleTerminalClick}
     >
-      {/* Terminal Header (styles unchanged) */}
+      {/* Terminal Header */}
       <div
         style={{
           backgroundColor: colors.crust,
@@ -848,13 +824,13 @@ Instructions:
         ref={contentRef}
         style={{
           padding: '16px',
-          height: `calc(100% - 41px - 37px)`, // Adjusted height calculation
+          height: `calc(100% - 41px - 37px)`,
           overflowY: 'auto',
           whiteSpace: 'pre-wrap',
           wordBreak: 'break-word',
         }}
       >
-        {/* Welcome Text - Will type out once */}
+        {/* Welcome Text */}
         <div style={{ marginBottom: '8px' }}>
           {typedText}
         </div>
@@ -871,9 +847,9 @@ Instructions:
           </div>
         ))}
 
-        {/* Command Input Line - Updated prompt */}
+        {/* Command Input Line */}
         <div style={{display: 'flex', alignItems: 'center'}}>
-          <span style={{color: colors.green, whiteSpace: 'nowrap'}}>root@localhost:{currentPath}$ </span> {/* Note: Using non-breaking space U+00A0 */}
+          <span style={{color: colors.green, whiteSpace: 'nowrap'}}>root@localhost:{currentPath}$ </span>
           <input
             ref={inputRef}
             type="text"
@@ -898,9 +874,9 @@ Instructions:
             autoFocus
           />
         </div>
-      </div> {/* End Scrollable Content */}
+      </div>
 
-      {/* Terminal Footer (styles unchanged) */}
+      {/* Terminal Footer */}
       <div
         style={{
           backgroundColor: colors.mantle,
@@ -919,7 +895,7 @@ Instructions:
         <span style={{float: 'right', color: colors.green}}>charlies-desktop</span>
       </div>
 
-      {/* Global Styles (unchanged) */}
+      {/* Global Styles */}
       <style jsx global>{`
         @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&display=swap');
 
