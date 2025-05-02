@@ -54,7 +54,7 @@ const TerminalPortfolio = () => {
   useEffect(() => {
     if (lastLoginTime && initialWelcomeTextRef.current === '') {
         // Set the initial welcome text string ONCE when lastLoginTime is available
-        initialWelcomeTextRef.current = `Last login: ${lastLoginTime}\nroot@localhost: type 'help' to see available commands`;
+        initialWelcomeTextRef.current = `Last login: ${lastLoginTime}\nType 'help' to see available commands`;
         // Start typing immediately if needed
         if (typedText.length < initialWelcomeTextRef.current.length) {
              const textToType = initialWelcomeTextRef.current;
@@ -188,7 +188,7 @@ const TerminalPortfolio = () => {
         borderLeft: `4px solid ${colors.yellow}`,
       }}
     >
-      <p>Hey! I'm Charlie Beutter, a hobbyist coder who likes to make things.</p>
+      <p>Hey! I'm Charlie Beutter, a 20-year-old coder who likes to make things.</p>
       <p>You can check out my projects using the 'projects' command.</p>
       <p>Enjoy your stay!</p>
     </div>
